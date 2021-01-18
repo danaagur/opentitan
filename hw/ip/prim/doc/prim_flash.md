@@ -41,16 +41,17 @@ tdo_o                   | output | jtag tdo
 bist_enable_i           | input  | lc_ctrl_pkg :: On for bist_enable input
 scanmode_i              | input  | dft scanmode input
 scan_en_i               | input  | dft scan shift input
-scan_rst_n_i            | input  | dft scanmode reset
-flash_power_ready_h_i   | input  | flash power is ready (high voltage connection)
-flash_power_down_h_i    | input  | flash wrapper is powering down (high voltage connection)
-flash_test_mode_a_i     | input  | flash test mode values (analog connection)
-flash_test_voltage_h_i  | input  | flash test mode voltage (high voltage connection)
+scan_rst_ni             | input  | dft scanmode reset
+flash_power_ready_hi    | input  | flash power is ready (high voltage connection)
+flash_power_down_hi     | input  | flash wrapper is powering down (high voltage connection)
+flash_test_mode_ai      | input  | flash test mode values (analog connection)
+flash_test_voltage_hi   | input  | flash test mode voltage (high voltage connection)
 flash_err_o             | output | flash level error interrupt indication, cleared on write 1 to status register
 flash_alert_po          | output | flash positive detector alert 
 flash_alert_no          | output | flash negative detector alert 
-flash_alert_ack         | input  | single pulse ack
-flash_alert_trig        | input  | alert force trig by SW
+flash_alert_ack_i       | input  | single pulse ack
+flash_alert_trig_i      | input  | alert force trig by SW
+devmode_i               | input  | flash wrapper registers devmode
 tl_i                    | input  | TL_UL  interface for rd/wr registers access
 tl_o                    | output | TL_UL  interface for rd/wr registers access
 ### Flash Request/Response Signals
@@ -167,3 +168,8 @@ The following is an example diagram
 The `flash_err_o` is a level interrupt indication, that is asserted whenever an error event occurs in one of the Flash banks.
 An Error status register is used to hold the error source of both banks, and it is cleared on writing 1 to the relevant bit.
 Clearing the status register trigs deassertion of the interrupt.
+
+## Alert indication
+Signals 'flash_alert_po','flash_alert_no' are security alerts, common for both Flash macros.
+ACK - 'flash_alert_ack' is an acknowledge for the flash_alert.
+The 'flash_alert_trig' is used to trig alert for testing.
